@@ -1,3 +1,4 @@
+import re
 import time
 
 import bs4
@@ -135,17 +136,18 @@ if __name__ == '__main__':
     # 주문현황 입력 날짜로 조회하기 (현재 하루만 조회하기 때문에 같은 날짜 입력)
     order_status_query(queryDate, queryDate)
 
-    time.sleep(10)
+    time.sleep(1)
 
-    # page_source = driver.page_source
-    #
-    # soup = BeautifulSoup(page_source, 'html.parser')
-    #
-    # body = soup.find('body')  # body 태그 요소
-    #
-    # spans = soup.find_all('span')  # 모든 span 요소를 리스트[]형태로 반환
-    #
-    # test_ids = soup.find_all("test_id")  # id 속성이 "test_id"인 모든 요소를 리스트형태로 반환
-    #
-    # print(f'body : {body}\n spans : {spans}\n test_ids : {test_ids}')
-    # print('done')
+    page_source = driver.page_source
+
+    soup = BeautifulSoup(page_source, 'html.parser')
+
+    body = soup.find('div', attrs={"id": "mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD003003_div_Contents_div_Work_div_list_grd_ordItemList_body_gridrow_0"})
+
+    # 테스트중-----------------------------------------
+    # test_ids = soup.find_all("mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD003003_div_Contents_div_Work_div_list_grd_ordItemList_body_gridrow")  # id 속성이 "test_id"인 모든 요소를 리스트형태로 반환
+
+    # test_ids = soup.select('#6GridCellTextContainerElement > div')
+
+    test2 = soup.select_one("#mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD003003_div_Contents_div_Work_div_list_grd_ordItemList_body_gridrow_0_cell_0_6GridCellTextContainerElement > div").string
+    print(f'body : {body}\n test_ids : {test_ids}\n test2 : {test2}')
