@@ -32,6 +32,13 @@ def login_to_home():
     loginAccessBox = driver.find_element(By.ID, HTML.FRAME_LOGIN_BTN)
     loginAccessBox.click()
 
+    try:
+        element = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, f"[id^='{HTML.FRAME_MAIN_POPUP}']"))
+        )  # 팝업창이 뜰 때까지 대기
+    finally:
+        pass  # TODO : 15초 이상 했는데 없는 경우 2가지 케이스 -> 진짜 없는경우, 로딩이 느린 경우 -> 분기 처리 필요
+
 
 def close_pop_up_list():
     mainPopupList = driver.find_elements(By.CSS_SELECTOR, f"[id*='{HTML.FRAME_MAIN_POPUP_CLOSE_BTN}']")
@@ -48,6 +55,13 @@ def go_to_order_status():
 
     menuSubOrderStatusBtn = driver.find_element(By.ID, HTML.BTN_HOME_SUB_ORDER_STATUS)
     menuSubOrderStatusBtn.click()
+
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, f"[id^='{HTML.FRAME_ORDER_STATUS_FILTER_ITEM}']"))
+        )  # 날짜 선택창이 뜰 때까지 대기
+    finally:
+        pass  # TODO : 5초 이내로 주문현황의 날짜 선택기가 로드되지 않는 경우 -> 네트워크 오류 Case로 예상 Handling 필요
 
 
 # return : 어제 날짜 String Format (0000-00-00)
@@ -77,6 +91,13 @@ def order_status_query(start_date: str, end_date: str):
     btnOrderStatusQuery = driver.find_element(By.ID, HTML.BTN_ORDER_STATUS_QUERY)
     btnOrderStatusQuery.click()
 
+    try:
+        element = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, f"[id^='{HTML.ITEM_RESULT_ROW_FIRST}']"))
+        )  # 쿼리 결과가 나올때까지 대기
+    finally:
+        pass  # TODO : 5초 이내로 선택한 날짜 조회가 안될 경우 -> 네트워크 오류 Case로 예상 Handling 필요
+
 
 if __name__ == '__main__':
     # ---------------------------- Get Local Properties Values ----------------------------------------------
@@ -102,29 +123,12 @@ if __name__ == '__main__':
     # 메인 화면 로그인
     login_to_home()
 
-    time.sleep(1)
-
-    try:
-        element = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, f"[id^='{HTML.FRAME_MAIN_POPUP}']"))
-        )  # 팝업창이 뜰 때까지 대기
-    finally:
-        pass  # TODO : 15초 이상 했는데 없는 경우 2가지 케이스 -> 진짜 없는경우, 로딩이 느린 경우 -> 분기 처리 필요
-
     # 팝업 리스트 제거
     close_pop_up_list()
-
     time.sleep(1)
 
     # 주문 현황으로 이동
     go_to_order_status()
-
-    try:
-        element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, f"[id^='{HTML.FRAME_ORDER_STATUS_FILTER_ITEM}']"))
-        )  # 날짜 선택창이 뜰 때까지 대기
-    finally:
-        pass  # TODO : 5초 이내로 주문현황의 날짜 선택기가 로드되지 않는 경우 -> 네트워크 오류 Case로 예상 Handling 필요
 
     # 조회할 날짜 가져오기 (현재 날짜 기준)
     queryDate = get_query_date()
