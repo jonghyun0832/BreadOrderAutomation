@@ -33,6 +33,13 @@ if __name__ == '__main__':
     FRAME_LOGIN_BTN = "mainframe_FrameSet0_LoginFrame_form_div_login_div_form_btn_loginTextBoxElement"
     FRAME_MAIN_POPUP = "mainframe_FrameSet0_WorkSteFrame_POPUP_ID229"
     FRAME_MAIN_POPUP_CLOSE_BTN = "form_btn_closeTextBoxElement"
+    FRAME_ORDER_STATUS_FILTER_ITEM = "mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD003003_div_Contents_div_Work_div_list_tab_list_tabpage08_tabbuttonTextBoxElement"
+    FRAME_ORDER_STATUS_DATE_START = "mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD003003_div_Contents_div_Work_div_search_cal_fromDt_cal_dt_calendaredit_input"
+
+    # 주문관리
+    BTN_HOME_ORDER_MANAGEMENT = "mainframe_FrameSet0_WorkSteFrame_form_div_mainMenu_div_menuLeft_div_icon_btn_ordTextBoxElement"
+    # 주문현황
+    BTN_HOME_SUB_ORDER_STATUS = "mainframe_FrameSet0_WorkSteFrame_form_div_mainMenu_div_PopMenu_grd_Menu_body_gridrow_9_cell_9_0_controltreeTextBoxElement"
 
     # ---------------------------- Main Code Starts -----------------------------------------------
 
@@ -49,7 +56,7 @@ if __name__ == '__main__':
             EC.presence_of_element_located((By.ID, FRAME_LOGIN_ID_BOX))
         )  # 입력창이 뜰 때까지 대기
     finally:
-        pass
+        pass # TODO : 웹 페이지 로딩이 굉장히 느린 Case Handling 필요
 
     loginIdBox = driver.find_element(By.ID, FRAME_LOGIN_ID_BOX)
     loginIdBox.send_keys(LOGIN_ID)
@@ -64,12 +71,11 @@ if __name__ == '__main__':
     time.sleep(1)
 
     try:
-        element = WebDriverWait(driver, 20).until(
+        element = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, f"[id^='{FRAME_MAIN_POPUP}']"))
-        )  # 입력창이 뜰 때까지 대기
+        )  # 팝업창이 뜰 때까지 대기
     finally:
-        pass
-
+        pass # TODO : 15초 이상 했는데 없는 경우 2가지 케이스 -> 진짜 없는경우, 로딩이 느린 경우 -> 분기 처리 필요
     time.sleep(2)
 
     mainPopupList = driver.find_elements(By.CSS_SELECTOR, f"[id*='{FRAME_MAIN_POPUP_CLOSE_BTN}']")
@@ -80,6 +86,29 @@ if __name__ == '__main__':
         time.sleep(1)
 
     time.sleep(3)
+    # 홈 화면 진입 완료
+
+    menuOrderManagementBtn = driver.find_element(By.ID, BTN_HOME_ORDER_MANAGEMENT)
+    menuOrderManagementBtn.click()
+    time.sleep(1)
+
+    menuSubOrderStatusBtn = driver.find_element(By.ID,  BTN_HOME_SUB_ORDER_STATUS)
+    menuSubOrderStatusBtn.click()
+
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, f"[id^='{FRAME_ORDER_STATUS_FILTER_ITEM}']"))
+        )  # 날짜 선택창이 뜰 때까지 대기
+    finally:
+        pass # TODO : 5초 이내로 주문현황의 날짜 선택기가 로드되지 않는 경우 -> 네트워크 오류 Case로 예상 Handling 필요
+
+    print("Load Complete")
+
+    inputBoxQueryStartDate = driver.find_element(By.ID, FRAME_ORDER_STATUS_DATE_START)
+    inputBoxQueryStartDate.click()
+    inputBoxQueryStartDate.send_keys("2023-01-27")
+
+    time.sleep(5)
 
     # page_source = driver.page_source
     #
