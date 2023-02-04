@@ -21,3 +21,5 @@ BTN_ORDER_STATUS_QUERY = "mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD
 
 # 주문현황 - 날짜 조회 첫번째 Row Item
 ITEM_RESULT_ROW_FIRST = "mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD003003_div_Contents_div_Work_div_list_grd_ordItemList_body_gridrow_0"
+
+BTN_ORDER_STATUS_EXPORT_CSV = "mainframe_FrameSet0_WorkSteFrame_form_div_mainWork_ORD003003_div_WorkTop_div_Btn_btn_excelTextBoxElement"
