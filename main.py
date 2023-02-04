@@ -169,8 +169,6 @@ if __name__ == '__main__':
     csv = pd.read_excel(csvPath)
     print(csv.values)
 
-    warnings.simplefilter("ignore")
-
     # page_source = driver.page_source
     #
     # soup = BeautifulSoup(page_source, 'html.parser')
