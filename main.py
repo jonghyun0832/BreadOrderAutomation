@@ -6,8 +6,10 @@ import selenium
 import configparser
 import datetime as dt
 import constants.HtmlConstants as HTML
+import constants.CsvConstants as CSV
 import pandas as pd
 import os
+import numpy as np
 
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -107,6 +109,13 @@ def get_item_csv():
     btnExportCSV.click()
 
 
+def get_index_from_csv(target):
+    productRowList, productColumnList = np.where(csv == target)
+    productHeaderRow = productRowList[0]
+    productColumnRow = productColumnList[0]
+    return productHeaderRow, productColumnRow
+
+
 if __name__ == '__main__':
     # ---------------------------- Get Local Properties Values ----------------------------------------------
     #
@@ -160,14 +169,24 @@ if __name__ == '__main__':
     # os.chdir(downloadPath)
     testList = os.listdir(downloadPath)
 
+    # # TODO : 예외처리, excel 파일이 없을 경우,
     for test in testList:
         if test.endswith("_주문현황.xlsx"):
             csvPath = csvPath + test
             break
 
-
+    #CSV 파일 읽고, 필요한 데이터 스크랩핑
     csv = pd.read_excel(csvPath)
-    print(csv.values)
+    productHeaderRow, productHeaderColumn = get_index_from_csv(CSV.PRODUCT_NAME)
+    productTotalRow, productTotalColumn = get_index_from_csv(CSV.PRODUCT_TOTAL)
+
+    for i in range(productHeaderRow + 2, productTotalRow):
+        productCode = csv.iloc[i, 6]
+        productName = csv.iloc[i, 7]
+        orderNum = csv.iloc[i, 16]
+        print(f"{productCode:>10} {orderNum:10}개 \t {productName:<20} ")
+
+
 
     # page_source = driver.page_source
     #
