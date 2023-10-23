@@ -16,7 +16,7 @@ jobs:
             {
               text: "Custom Field Check",
               attachments: [{
-                author_name: "dddd"
+                author_name: "dddd",
                 fallback: 'fallback',
                 color: 'good',
                 title: 'CI Result',
