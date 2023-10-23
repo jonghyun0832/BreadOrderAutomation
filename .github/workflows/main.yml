@@ -11,12 +11,14 @@ jobs:
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
+          icon_emoji: ':octocat:'
+          job_name: Test
           status: custom
           custom_payload: |
             {
-              text: "Custom Field Check",
+              text: "Pull Request Opened!",
               attachments: [{
-                author_name: "dddd",
+                author_name: "Author : ${{ github.event.pull_request.user.login }}",
                 fallback: 'fallback',
                 color: 'good',
                 title: 'CI Result',
