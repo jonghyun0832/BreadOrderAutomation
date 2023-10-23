@@ -8,10 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set PR Author
-        id: pr_author
-        run: echo "::set-output name=author::Author - ${{ github.event.pull_request.user.login }}"
-    
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
@@ -20,7 +16,7 @@ jobs:
             {
               text: "Custom Field Check",
               attachments: [{
-                author_name: "${{ steps.pr_author.outputs.author }}",
+                author_name: "dddd"
                 fallback: 'fallback',
                 color: 'good',
                 title: 'CI Result',
