@@ -2,12 +2,11 @@ name : New Pull Request Created
 
 on:
   pull_request:
-    types:
-     - opened
+    types: [opened]
 
 jobs:
   build:
-    runs-on: ubunu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: action-slack
       uses: 8398a7/action-slack@v3
