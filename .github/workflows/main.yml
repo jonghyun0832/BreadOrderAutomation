@@ -23,7 +23,7 @@ jobs:
           status: ${{ job.status }}
           author_name: ${{ steps.pr_author.outputs.author }}
           fields: repo,workflow
-          custom: ${{ steps.pr_link.outputs.pr_link }}
+          custom: 링크 - ${{ steps.pr_link.outputs.pr_link }}
           if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
