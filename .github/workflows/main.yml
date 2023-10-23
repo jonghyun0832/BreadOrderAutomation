@@ -21,11 +21,12 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: custom
+          icon_emoji: ':octocat:'
           custom_payload: |
             {
               text: "Pull Request Opened!",
               attachments: [{
-                author_name: "Author : ${{ github.event.pull_request.user.login }}" >,
+                author_name: "Author : ${{ github.event.pull_request.user.login }}",
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
