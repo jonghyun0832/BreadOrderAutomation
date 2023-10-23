@@ -11,12 +11,12 @@ jobs:
       - name: Get PR Reviewers
         id: get_reviewers
         run: |
-          reviewers=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          reviewers=$(curl -s -H "Authorization: Bearer ${{ secrets.PROJECT_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/review-requested" | jq -r '.[].login')
           echo "::set-output name=reviewers::$reviewers"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
