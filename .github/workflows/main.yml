@@ -10,15 +10,40 @@ jobs:
     steps:
       - name: Set PR Author
         id: pr_author
-        run: echo "::set-output name=author::기안자 - ${{ github.event.pull_request.user.login }}"
+        run: echo "::set-output name=author::Author - ${{ github.event.pull_request.user.login }}"
     
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
-          author_name: ${{ steps.pr_author.outputs.author }}
-          fields: repo,workflow
-          custom: "[PR URL](${{ github.event.pull_request.html_url }})"
+          status: custom
+          custom_payload: |
+            {
+              text: "Custom Field Check",
+              attachments: [{
+                author_name: ${{ steps.pr_author.outputs.author }},
+                fallback: 'fallback',
+                color: 'good',
+                title: 'CI Result',
+                text: 'Succeeded',
+                fields: [{
+                  title: 'lower case',
+                  value: 'LOWER CASE CHECK'.toLowerCase(),
+                  short: true
+                },
+                {
+                  title: 'reverse',
+                  value: 'gnirts esrever'.split('').reverse().join(''),
+                  short: true
+                },
+                {
+                  title: 'long title1',
+                  value: 'long value1',
+                  short: false
+                }],
+                actions: [{
+                }]
+              }]
+            }
           if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
