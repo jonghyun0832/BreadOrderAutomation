@@ -30,7 +30,6 @@ jobs:
         run: |
           pr_reviewer_list=${{ steps.get_reviewers.outputs.reviewer_string_list }}
           slack_reviewer_list=()
-
           for reviewer in "${pr_reviewer_list[@]}; do
             if [ "$reviewer" == "hosunghan-0821" ]; then
               slack_reviewer_list+=("gooood")
@@ -38,7 +37,6 @@ jobs:
               slack_reviewer_list+=("unregistered name : $reviewer")
             fi
           done
-
           echo "slack_reviewers=$slack_reviewer_list" >> $GITHUB_OUTPUT
       - name: action-slack
         uses: 8398a7/action-slack@v3
