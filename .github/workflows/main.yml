@@ -25,6 +25,21 @@ jobs:
         run: |
           pr_url="[${{ github.event.pull_request.title }}]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }})"
           echo "url=$pr_url" >> $GITHUB_OUTPUT
+      - name: Convert To Slack Name
+        id: slack_name
+        run: |
+          pr_reviewer_list=${{ steps.get_reviewers.outputs.reviewer_string_list }}
+          slack_reviewer_list=()
+
+          for reviewer in "${pr_reviewer_list[@]}; do
+            if [ "$reviewer" == "hosunghan-0821" ]; then
+              slack_reviewer_list+=("gooood")
+            else
+              slack_reviewer_list+=("unregistered name : $reviewer")
+            fi
+          done
+
+          echo "slack_reviewers=$slack_reviewer_list" >> $GITHUB_OUTPUT
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
@@ -38,7 +53,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: "<!here> @${{ steps.get_reviewers.outputs.reviewer_string_list }}",
+                text: "<!here> ${{ steps.get_reviewers.outputs.slack_reviewers }}",
                 fields: [{
                   title: 'PR Title',
                   value: '${{ steps.pr_url.outputs.url }}',
@@ -62,13 +77,3 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
-      - name: action-slack-mention
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          mention: 'here'
-          if_mention: failure
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
-          
