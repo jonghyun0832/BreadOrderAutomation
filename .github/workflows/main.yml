@@ -34,7 +34,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: '${{ steps.get_reviewers.outputs.reviewer_string_list }}',
+                text: '@${{ steps.get_reviewers.outputs.reviewer_string_list }}',
                 fields: [{
                   title: 'PR Title',
                   value: '${{ github.event.pull_request.title }}',
