@@ -17,6 +17,9 @@ jobs:
           echo "reviewers=$reviewers" >>$GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+      - name: test-log
+        run: |
+          echo '${{ github.repository }}'
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
@@ -32,8 +35,8 @@ jobs:
                 title: 'PR Reviewers',
                 text: '${{ steps.get_reviewers.outputs.reviewers }}',
                 fields: [{
-                  title: 'lower case',
-                  value: 'LOWER CASE CHECK'.toLowerCase(),
+                  title: 'PR Title',
+                  value: '${{ github.event.pull_request.title }}',
                   short: true
                 },
                 {
