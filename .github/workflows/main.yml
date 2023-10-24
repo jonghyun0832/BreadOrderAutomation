@@ -35,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log
         run: |
-          echo ${{ steps.get_reviewers.outputs.reviewers }}
+          echo $reviewers
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
