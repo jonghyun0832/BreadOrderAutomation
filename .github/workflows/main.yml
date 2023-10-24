@@ -16,7 +16,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
-          reviewer_list = ${{ reviewers | jq -r '.users[].login' }}
+          reviewer_list=$(echo $reviewers | jq -r '.users[].login')
           echo "reviewer_string_list=$reviewer_list" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
@@ -31,13 +31,6 @@ jobs:
           echo $reviewers | jq -r '.users[].login'
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
-      - name: env-test
-        id: test1
-        run: |
-          echo "test=Hello world" >> $GITHUB_OUTPUT
-      - name: test-log1
-        run: |
-          echo "${{ steps.test1.outputs.test }}"
       - name: test-log
         run: |
           echo "${{ steps.get_reviewers.outputs.reviewer_string_list }}"
@@ -54,7 +47,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: '$reviewers_list',
+                text: '${{ steps.get_reviewers.outputs.reviewer_string_list }}',
                 fields: [{
                   title: 'PR Title',
                   value: '${{ github.event.pull_request.title }}',
