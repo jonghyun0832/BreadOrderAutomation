@@ -39,8 +39,6 @@ jobs:
             fi
           done
 
-          echo "$slack_reviewer_list"
-
           slack_mention_string=""
 
           for reviewer in "${slack_reviewer_list[@]}"; do
