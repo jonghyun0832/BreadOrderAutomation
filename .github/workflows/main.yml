@@ -22,6 +22,17 @@ jobs:
           echo "reviewers=$reviewers_list" >>$GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+      - name: test-log
+        run: |
+          reviewers=$(curl -s -L \
+            -H "Authorization: Bearer ${{ secrets.PROJECT_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
+
+          echo $reviewers | jq -r '.users[].login'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
