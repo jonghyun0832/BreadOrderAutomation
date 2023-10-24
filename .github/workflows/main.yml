@@ -18,7 +18,7 @@ jobs:
             -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
 
           reviewers_list=$reviewers | jq -r '.users[].login'
-            
+          echo $reviewers
           echo "reviewers=$reviewers_list" >> $GITHUB_OUTPUT
       - name: test-log2
         run: |
@@ -38,7 +38,6 @@ jobs:
           echo "${{ steps.test1.outputs.test }}"
       - name: test-log
         run: |
-          reviewers=${{ steps.get_reviewers.outputs.reviewers }}
           echo "${{ steps.get_reviewers.outputs.reviewers }}"
       - name: action-slack
         uses: 8398a7/action-slack@v3
