@@ -39,7 +39,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: '@${{ steps.get_reviewers.outputs.reviewer_string_list }}',
+                text: "@${{ steps.get_reviewers.outputs.reviewer_string_list }}",
                 fields: [{
                   title: 'PR Title',
                   value: '${{ steps.pr_url.outputs.url }}',
@@ -63,3 +63,11 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
+      - name: action-slack-mention
+        uses: 8398a7/action-slack@v3
+        with:
+          icon_emoji: ':octocat:'
+          mention: 'here'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          
