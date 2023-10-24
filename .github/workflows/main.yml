@@ -19,7 +19,7 @@ jobs:
 
           reviewers_list=$reviewers | jq -r '.users[].login'
             
-          echo $reviewers_list >> $GITHUB_ENV
+          echo "reviewers = $reviewers_list" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log2
@@ -35,8 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log
         run: |
-          reviewers=${{ env.GITHUB_ENV }}
-          echo $reviewers
+          echo "result : ${{ steps.stepid.outputs.reviewers }}"
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
