@@ -65,9 +65,9 @@ jobs:
       - name: action-slack-mention
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
           icon_emoji: ':octocat:'
           mention: 'here'
+          if_mention: failure
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           
