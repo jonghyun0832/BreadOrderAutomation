@@ -39,7 +39,7 @@ jobs:
           echo "test=Hello world" >> $env:GITHUB_OUTPUT
       - name: test-log1
         run: |
-          echo "${{ steps.step1.outputs.test }}"
+          echo "${{ steps.test1.outputs.test }}"
       - name: test-log
         run: |
           reviewers=${{ steps.get_reviewers.outputs.reviewers }}
