@@ -19,9 +19,7 @@ jobs:
 
           reviewers_list=$reviewers | jq -r '.users[].login'
             
-          echo "reviewers=$reviewers_list" >> $env:GITHUB_OUTPUT
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          echo "reviewers=$reviewers_list" >> $GITHUB_OUTPUT
       - name: test-log2
         run: |
           reviewers=$(curl -s -L \
@@ -31,12 +29,10 @@ jobs:
             -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
 
           echo $reviewers | jq -r '.users[].login'
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: env-test
         id: test1
         run: |
-          echo "test=Hello world" >> $env:GITHUB_OUTPUT
+          echo "test=Hello world" >> GITHUB_OUTPUT
       - name: test-log1
         run: |
           echo "${{ steps.test1.outputs.test }}"
