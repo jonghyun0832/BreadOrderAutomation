@@ -42,7 +42,7 @@ jobs:
           slack_mention_string=""
 
           for reviewer in "${slack_reviewer_list[@]}"; do
-            slack_mention_string+=" <!$reviewer>"
+            slack_mention_string+=" <@$reviewer>"
           done
           
           echo "slack_reviewers=$slack_mention_string" >> $GITHUB_OUTPUT
@@ -59,7 +59,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: "<!jonghyun_Android>",
+                text: "<@jonghyun_Android>",
                 fields: [{
                   title: 'PR Title',
                   value: '${{ steps.pr_url.outputs.url }}',
