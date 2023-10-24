@@ -24,7 +24,7 @@ jobs:
       - name: Get PR URL
         id: pr_url
         run: |
-          pr_url="${{ github.event.pull_request.title }}"
+          pr_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }}"
           echo "url=$pr_url" >> $GITHUB_OUTPUT
       - name: Convert To Slack Name
         id: slack_name
@@ -67,7 +67,7 @@ jobs:
                 },
                 {
                   title: 'URL',
-                  value: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }}",
+                  value: '${{ steps.pr_url.outputs.url }}',
                   short: true
                 },
                 {
