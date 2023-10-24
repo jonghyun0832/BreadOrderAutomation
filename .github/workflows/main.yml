@@ -67,7 +67,7 @@ jobs:
                 },
                 {
                   title: 'URL',
-                  value: '$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }}',
+                  value: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }}",
                   short: true
                 },
                 {
