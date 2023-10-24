@@ -59,7 +59,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: "<@jonghyun_Android>",
+                text: "<@U03EXPVUN81>",
                 fields: [{
                   title: 'PR Title',
                   value: '${{ steps.pr_url.outputs.url }}',
