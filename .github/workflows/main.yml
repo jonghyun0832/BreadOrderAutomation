@@ -52,7 +52,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: "<!here> ${{ steps.get_reviewers.outputs.slack_reviewers }}",
+                text: "<!here> ${{ steps.slack_name.outputs.slack_reviewers }}",
                 fields: [{
                   title: 'PR Title',
                   value: '${{ steps.pr_url.outputs.url }}',
