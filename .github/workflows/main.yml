@@ -15,10 +15,10 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.PROJECT_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers") | jq -r '.users[].login'
+            -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
 
-          echo $reviewers
-          echo "reviewers=$reviewers" >> $GITHUB_OUTPUT
+          echo $reviewers | jq -r '.users[].login'
+          echo "reviewers=$reviewers | jq -r '.users[].login'" >> $GITHUB_OUTPUT
       - name: test-log2
         run: |
           reviewers=$(curl -s -L \
