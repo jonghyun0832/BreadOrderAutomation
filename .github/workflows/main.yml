@@ -33,10 +33,15 @@ jobs:
           echo $reviewers | jq -r '.users[].login'
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+      - name: env-test
+        id: test1
+        run: |
+          echo "test=Hello world" >> $GITHUB_OUTPUT
       - name: test-log
         run: |
           reviewers=${{ steps.get_reviewers.outputs.reviewers }}
-          echo "result : $reviewers"
+          test_value=${{ steps.test1.outputs.test }}
+          echo "result : $reviewers, $test_value"
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
