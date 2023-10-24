@@ -30,7 +30,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: '$(cat $GITHUB_OUTPUT)',
+                text: '${cat $GITHUB_OUTPUT}',
                 fields: [{
                   title: 'lower case',
                   value: 'LOWER CASE CHECK'.toLowerCase(),
