@@ -20,6 +20,11 @@ jobs:
           echo "reviewer_string_list=$reviewer_list" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+      - name: Get PR URL
+        id: pr_url
+        run: |
+          pr_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }}"
+          echo "url=$pr_url" >> $GITHUB_OUTPUT
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
@@ -34,10 +39,10 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: '@here',
+                text: '@${{ steps.get_reviewers.outputs.reviewer_string_list }}',
                 fields: [{
                   title: 'PR Title',
-                  value: '${{ github.event.pull_request.title }}',
+                  value: '[${{ github.event.pull_request.title }}](${{ steps.pr_url.outputs.url }})',
                   short: true
                 },
                 {
