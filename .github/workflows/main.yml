@@ -24,7 +24,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log
         run: |
-          echo "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers"
+          reviewers=$(curl -s -L \
+            -H "Authorization: Bearer ${{ secrets.PROJECT_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
+          echo $reviewers
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
