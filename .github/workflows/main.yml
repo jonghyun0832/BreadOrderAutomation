@@ -16,8 +16,9 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
-          reviewer_list=$(echo $reviewers | jq -r '.users[].login')
-          echo "reviewer_string_list=$reviewer_list" >> $GITHUB_OUTPUT
+          reviewer_list=($(echo $reviewers | jq -r '.users[].login'))
+          reviewer_list_str=$(IFS=,; echo "${reviewer_list[*]}")
+          echo "reviewer_string_list=$reviewer_list_str" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: Get PR URL
@@ -30,7 +31,7 @@ jobs:
         run: |
           pr_reviewer_list=${{ steps.get_reviewers.outputs.reviewer_string_list }}
           slack_reviewer_list=()
-          for reviewer in "${pr_reviewer_list[@]}; do
+          for reviewer in "${pr_reviewer_list[@]}"; do
             if [ "$reviewer" == "hosunghan-0821" ]; then
               slack_reviewer_list+=("gooood")
             else
