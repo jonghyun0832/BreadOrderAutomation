@@ -19,7 +19,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log
         run: |
-          echo '${{ github.repository }}'
+          echo "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/review-requested"
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
