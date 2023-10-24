@@ -33,7 +33,7 @@ jobs:
           slack_reviewer_list=()
           for reviewer in "${pr_reviewer_list[@]}"; do
             if [ "$reviewer" == "hosunghan-0821" ]; then
-              slack_reviewer_list+=("서종현_Android")
+              slack_reviewer_list+=("jonghyun_Android")
             else
               slack_reviewer_list+=("unregistered name : $reviewer")
             fi
