@@ -19,7 +19,7 @@ jobs:
 
           reviewers_list=$reviewers | jq -r '.users[].login'
             
-          echo "reviewers=$reviewers_list" >> $GITHUB_OUTPUT
+          echo "reviewers=$reviewers_list" >> $env:GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log2
@@ -36,7 +36,7 @@ jobs:
       - name: env-test
         id: test1
         run: |
-          echo "test=Hello world" >> $GITHUB_OUTPUT
+          echo "test=Hello world" >> $env:GITHUB_OUTPUT
       - name: test-log1
         run: |
           echo "${{ steps.step1.outputs.test }}"
