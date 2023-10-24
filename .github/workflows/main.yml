@@ -55,11 +55,11 @@ jobs:
             {
               text: "Pull Request Opened!",
               attachments: [{
-                author_name: "Author : ${{ github.event.pull_request.user.login }}\n",
+                author_name: "Author : ${{ github.event.pull_request.user.login }}",
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: '${{ steps.slack_name.outputs.slack_reviewers }}\n',
+                text: '${{ steps.slack_name.outputs.slack_reviewers }}',
                 fields: [{
                   title: 'PR Title',
                   value: '${{ github.event.pull_request.title }}',
