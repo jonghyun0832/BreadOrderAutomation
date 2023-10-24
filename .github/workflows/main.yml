@@ -37,11 +37,13 @@ jobs:
         id: test1
         run: |
           echo "test=Hello world" >> $GITHUB_OUTPUT
+      - name: test-log1
+        run: |
+          echo "${{ steps.step1.outputs.test }}"
       - name: test-log
         run: |
           reviewers=${{ steps.get_reviewers.outputs.reviewers }}
-          test_value=${{ steps.test1.outputs.test }}
-          echo "result : $reviewers, $test_value"
+          echo "${{ steps.get_reviewers.outputs.reviewers }}"
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
