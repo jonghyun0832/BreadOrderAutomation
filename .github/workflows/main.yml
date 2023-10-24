@@ -19,7 +19,7 @@ jobs:
 
           reviewers_list=$reviewers | jq -r '.users[].login'
             
-          echo "reviewers=$reviewers_list" >>$GITHUB_OUTPUT
+          echo "reviewers=$reviewers_list" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log
@@ -33,6 +33,9 @@ jobs:
           echo $reviewers | jq -r '.users[].login'
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+      - name: test-log
+        run: |
+          echo '$reviewers_list'
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:
@@ -46,7 +49,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: '${{ steps.get_reviewers.outputs.reviewers }}',
+                text: '$reviewers_list',
                 fields: [{
                   title: 'PR Title',
                   value: '${{ github.event.pull_request.title }}',
