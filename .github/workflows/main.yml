@@ -17,7 +17,7 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -X GET "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers")
 
-          reviewers_list=$(echo $reviewers | jq -r '.users[].login' | jq -s .)
+          reviewers_list=$(echo $reviewers | jq -r '.[].login' | jq -s .)
             
           echo "reviewers=$reviewers_list" >>$GITHUB_OUTPUT
         env:
