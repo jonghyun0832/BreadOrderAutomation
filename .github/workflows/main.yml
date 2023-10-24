@@ -33,7 +33,7 @@ jobs:
           slack_reviewer_list=()
           for reviewer in "${pr_reviewer_list[@]}"; do
             if [ "$reviewer" == "hosunghan-0821" ]; then
-              slack_reviewer_list+=("gooood")
+              slack_reviewer_list+=("서종현_Android")
             else
               slack_reviewer_list+=("unregistered name : $reviewer")
             fi
@@ -52,7 +52,7 @@ jobs:
                 fallback: 'fallback',
                 color: 'good',
                 title: 'PR Reviewers',
-                text: "<!here> ${{ steps.slack_name.outputs.slack_reviewers }}",
+                text: "<!${{ steps.slack_name.outputs.slack_reviewers }}>",
                 fields: [{
                   title: 'PR Title',
                   value: '${{ steps.pr_url.outputs.url }}',
