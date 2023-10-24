@@ -22,7 +22,7 @@ jobs:
           echo "reviewers=$reviewers_list" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
-      - name: test-log
+      - name: test-log2
         run: |
           reviewers=$(curl -s -L \
             -H "Authorization: Bearer ${{ secrets.PROJECT_TOKEN }}" \
@@ -35,6 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log
         run: |
+          reviewers=$(cat $GITHUB_ENV)
           echo $reviewers
       - name: action-slack
         uses: 8398a7/action-slack@v3
