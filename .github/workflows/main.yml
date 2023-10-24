@@ -23,7 +23,7 @@ jobs:
       - name: Get PR URL
         id: pr_url
         run: |
-          pr_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }}"
+          pr_url="[${{ github.event.pull_request.title }}]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.pull_request.number }})"
           echo "url=$pr_url" >> $GITHUB_OUTPUT
       - name: action-slack
         uses: 8398a7/action-slack@v3
@@ -42,7 +42,7 @@ jobs:
                 text: '@${{ steps.get_reviewers.outputs.reviewer_string_list }}',
                 fields: [{
                   title: 'PR Title',
-                  value: '[${{ github.event.pull_request.title }}](${{ steps.pr_url.outputs.url }})',
+                  value: '${{ steps.pr_url.outputs.url }}',
                   short: true
                 },
                 {
