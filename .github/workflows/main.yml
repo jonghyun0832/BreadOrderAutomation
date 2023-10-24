@@ -19,7 +19,7 @@ jobs:
 
           reviewers_list=$reviewers | jq -r '.users[].login'
             
-          echo "reviewers=$reviewers_list" >> $GITHUB_ENV
+          echo $reviewers_list >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_TOKEN }}
       - name: test-log2
